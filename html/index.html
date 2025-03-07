@@ -461,22 +461,27 @@
 
 
         AF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        BF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        // // CF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
+        
+        let kojoTexture = new THREE.TextureLoader().load('kojo.jpg');
+        
+        let arsaTexture = new THREE.TextureLoader().load('arsa.jpg');
+        BF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ map: arsaTexture }));
+        
+        CF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ map: kojoTexture }));
         // // DF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
         // // EF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
         // // FF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
 
-        AF.name = "Kojo"
+        AF.name = "AF"
         BF.name = "Arsa"
-        // CF.name = "CF"
+        CF.name = "Kojo"
         // DF.name = "DF"
         // EF.name = "EF"
         // FF.name = "FF"
 
-        AF.position.set(-0.7, 0.05, 0.8)
-        BF.position.set(-0.7, 0.05, 0)
-        // CF.position.set(-0.7, 0.05, -0.8)
+        AF.position.set(-1.2, 0.05, 0.8)
+        BF.position.set(-1.2, 0.05, 0)
+        CF.position.set(-1.2, 0.05, -0.8)
         // DF.position.set(0.7, 0.05, -0.8)
         // EF.position.set(0.7, 0.05, 0)
         // FF.position.set(0.7, 0.05, 0.8)
@@ -573,6 +578,22 @@
                 video.pause();
                 console.log('Video paused');
               }
+            }
+            else if (intersects[0].object.name == "Kojo") {
+              console.log("hit kojo");
+              video.src = "kojo.mp4";
+              if (video.paused) {
+                video.play();
+                console.log('Kojo video playing');
+              } 
+            }
+            else if (intersects[0].object.name == "Arsa") {
+              console.log("hit arsa");
+              video.src = "arsa.mp4";
+              if (video.paused) {
+                video.play();
+                console.log('Arsa video playing');
+              } 
             }
             else if (intersects[0].object.name == "BF" || intersects[0].object.name == "BB") {
               landTemp = "B"
