@@ -27,7 +27,7 @@
   <script src="libs/jquery-3.6.0.min.js"></script>
 </head>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+<body style='margin : 0px; overflow: hidden; '>
 
   <!-- 
   Example created by Lee Stemkoski: https://github.com/stemkoski
@@ -35,26 +35,31 @@
 -->
 
   <div id="joyDiv" onmousedown="joystickStart()" ontouchstart="joystickStart()"
-    style="width:100px;height:100px;bottom:10%;left:50%;margin-left:-50px;position:absolute;z-index: 10;"></div>
+    style="width:100px;height:100px;bottom:10%;left:50%;margin-left:-50px;position:absolute;z-index: 10; opacity: 0;"></div>
   <div id="container">
     <div id="home">
-      <div>
+      <img src="assets/brush/Beads 06.png" style="height:40vh;width:40vh; position: absolute; top:0;left:0; transform:translate(-10vh,-10vh)"/>
+      <img src="assets/brush/Beads 04.png" style="height:30vh;width:30vh; position: absolute; top:0;right:0; transform:translate(10vh,3vh)"/>
+      <div class="formContainer">
+        <h1>
+          Saling Sulam
+        </h1>
         <h2>
-          Please insert your name.
+          Silakan masukkan nama kamu.
         </h2>
 
-        <form action="">
+        <form class="nameForm" action="">
           <input id="username" />
-          <button>
+          <button class="mainButton"> 
             <h3>
-              Join Room
+              Masuk
             </h3>
           </button>
         </form>
 
 
         <h3>
-          There is <span id="onlineUser"></span> user in the room.
+          Terdapat <span id="onlineUser"></span> pengguna aktif.
         </h3>
       </div>
 
@@ -157,6 +162,9 @@
       let model, colour;
       let raycaster = new THREE.Raycaster();
       let mouse = new THREE.Vector2();
+
+      // Declare video element in a scope accessible to interact function
+      let video;
 
       initialize();
       animate();
@@ -324,9 +332,13 @@
         environment = new THREE.Group();
         scene.add(environment);
         let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, environment, {
-          type: 'pattern', patternUrl: "data/kanji.patt",
+          type: 'pattern', patternUrl: "data/sunflower.patt"
         })
 
+        
+        let markerControls2 = new THREEx.ArMarkerControls(arToolkitContext, environment, {
+          type: 'pattern', patternUrl: "data/kanji.patt"
+        })
         ////////////////////////////////////////////////////////////
         // setup scene
         ////////////////////////////////////////////////////////////
@@ -419,63 +431,77 @@
         const people = ['BeachBabe', 'BusinessMan', 'Doctor', 'FireFighter', 'Housewife', 'Policeman', 'Prostitute', 'Punk', 'RiotCop', 'Roadworker', 'Robber', 'Sheriff', 'Streetman', 'Waitress'];
         model = people[Math.floor(Math.random() * people.length)];
 
-        floader.load(`assets/fbx/people/${model}.fbx`, function (object) {
-          object.scale.multiplyScalar(0.001)
+        // floader.load(`assets/fbx/people/${model}.fbx`, function (object) {
+        //   object.scale.multiplyScalar(0.001)
 
-          object.name = id;
+        //   object.name = id;
 
-          object.traverse(function (child) {
-            if (child.isMesh) {
-              child.castShadow = true;
-              child.receiveShadow = false;
-            }
-          });
+        //   object.traverse(function (child) {
+        //     if (child.isMesh) {
+        //       child.castShadow = true;
+        //       child.receiveShadow = false;
+        //     }
+        //   });
 
-          const name = model;//object.children[game.player.index].name.substring(3);
-          const colours = ['Black', 'Brown', 'White'];
-          colour = colours[Math.floor(Math.random() * colours.length)];
+        //   const name = model;//object.children[game.player.index].name.substring(3);
+        //   const colours = ['Black', 'Brown', 'White'];
+        //   colour = colours[Math.floor(Math.random() * colours.length)];
 
-          loader.load(`assets/images/SimplePeople_${name}_${colour}.png`, function (texture) {
-            object.traverse(function (child) {
-              if (child.isMesh) {
-                child.material.map = texture;
-              }
-            });
-          });
+        //   loader.load(`assets/images/SimplePeople_${name}_${colour}.png`, function (texture) {
+        //     object.traverse(function (child) {
+        //       if (child.isMesh) {
+        //         child.material.map = texture;
+        //       }
+        //     });
+        //   });
 
-          environment.add(object);
-          Player.object = object;
-        });
+        //   environment.add(object);
+        //   Player.object = object;
+        // });
 
 
         AF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
         BF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        CF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        DF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        EF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
-        FF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
+        // // CF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
+        // // DF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
+        // // EF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
+        // // FF = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), new THREE.MeshStandardMaterial({ color: 0x808080 }));
 
-        AF.name = "AF"
-        BF.name = "BF"
-        CF.name = "CF"
-        DF.name = "DF"
-        EF.name = "EF"
-        FF.name = "FF"
+        AF.name = "Kojo"
+        BF.name = "Arsa"
+        // CF.name = "CF"
+        // DF.name = "DF"
+        // EF.name = "EF"
+        // FF.name = "FF"
 
         AF.position.set(-0.7, 0.05, 0.8)
         BF.position.set(-0.7, 0.05, 0)
-        CF.position.set(-0.7, 0.05, -0.8)
-        DF.position.set(0.7, 0.05, -0.8)
-        EF.position.set(0.7, 0.05, 0)
-        FF.position.set(0.7, 0.05, 0.8)
+        // CF.position.set(-0.7, 0.05, -0.8)
+        // DF.position.set(0.7, 0.05, -0.8)
+        // EF.position.set(0.7, 0.05, 0)
+        // FF.position.set(0.7, 0.05, 0.8)
+        let floorGeometry = new THREE.PlaneGeometry(1.35, 2.4);
 
-        let floorGeometry = new THREE.PlaneGeometry(2.25, 2.4);
-        let texture = loader.load("assets/images/Tiles.jpg");
-        // repeat texture
+        // Initialize video element
+        video = document.createElement('video');
+        video.src = './kojo.mp4';
+        video.loop = true;
+        video.muted = false; // Ensure video is not muted
+        video.playsInline = true; // Add playsInline for mobile
+
+        // Create promise to ensure video loads and plays
+        let videoPromise = video.play()
+          .then(() => {
+            console.log("Video playing successfully");
+          })
+          .catch((err) => {
+            console.log("Error playing video:", err);
+          });
+
+        let texture = new THREE.VideoTexture(video);
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
-        // texture.repeat.set(8, 1);
-        let floorMaterial = new THREE.MeshLambertMaterial({ map: texture })
+        let floorMaterial = new THREE.MeshLambertMaterial({ map: texture });
 
         floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
         floorMesh.rotation.x = -Math.PI / 2;
@@ -538,9 +564,15 @@
           raycaster.setFromCamera(mouse, camera);
           const intersects = raycaster.intersectObjects(raycastObjects, true);
           if (intersects[0]) {
-            modal = true;
             if (intersects[0].object.name == "AF" || intersects[0].object.name == "AB") {
-              landTemp = "A"
+              console.log("hit");
+              if (video.paused) {
+                video.play();
+                console.log('Video playing');
+              } else {
+                video.pause();
+                console.log('Video paused');
+              }
             }
             else if (intersects[0].object.name == "BF" || intersects[0].object.name == "BB") {
               landTemp = "B"
@@ -568,7 +600,7 @@
       }
 
       window.addEventListener('mouseup', onInteraction);
-      window.addEventListener('touchend', onInteraction);
+      // window.addEventListener('touchend', onInteraction);
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener("touchstart", function funcref(evt) {
         window.removeEventListener("touchstart", funcref, false);
@@ -576,8 +608,8 @@
 
       function update() {
         // update artoolkit on every frame
-        if (arToolkitSource.ready !== false)
-          arToolkitContext.update(arToolkitSource.domElement);
+        if (arToolkitSource.ready !== false){
+          arToolkitContext.update(arToolkitSource.domElement);}
 
         if (isJoystickUsed) {
           turn = joy.GetPosY() / 50 * (joy.GetPosX() - 50) / 25;
